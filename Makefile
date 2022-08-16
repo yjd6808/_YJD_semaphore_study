@@ -1,13 +1,13 @@
  # 작성자 : 윤정도
- # 각 cpp 파일을 컴파일해서 곧바로 elf 확장자의 실행파일을 만들어줍니다.
+ # 하위 디렉토리들에 대해서 한번에 메이크 작업을 수행합니다. 
 
-CPPS := $(wildcard *.cpp)
-ELFS := $(CPPS:.cpp=.elf)
 
-CPPFLAGS := -Wall -std=c++20
+SUB_DIRS := 1_producer_consumer 2_resource_allocation
 
-all: $(ELFS)
+all: $(SUB_DIRS)
 
-$(ELFS): %.elf: %.cpp
-	$(CXX) $(CPPFLAGS) -o $@ $<
+$(SUB_DIRS):
+	$(info aaa)
+	cd $@; $(MAKE)	$(MAKECMDGOALS)
 
+.PHONY: $(SUB_DIRS)

@@ -1,6 +1,5 @@
 /*
- * 작성자 : 윤정도
- * 가장 기본적인 형태의 세마포어 구현
+ * 작성자 : 윤정도 가장 기본적인 형태의 세마포어 구현
  */
 #pragma once
 
@@ -31,9 +30,23 @@ public:
             m_usable_count++;
     }
 
+    bool locked() {
+        std::lock_guard<std::mutex> lg(m_mtx);
+        return m_usable_count == 0;
+    }
+
 private:
     int m_usable_count;     // 현재 잠금을 획득가능한 쓰레드 수
     std::mutex m_mtx;       // m_usable_count에 대해서 원자적 연산을 수행해주기 위한 뮤텍스
 };
 
-using binary_semaphore = basic_semaphore<1>;
+
+using bin_semaphore = basic_semaphore<1>;
+
+template <typename _t_sem>
+struct sem_guard {
+    sem_guard(_t_sem& sem): m_sem(&sem) { sem.wait(); }
+    ~sem_guard() { m_sem->signal(); }
+
+   _t_sem* m_sem;
+};

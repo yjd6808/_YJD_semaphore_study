@@ -1,0 +1,18 @@
+{
+  "configurations": {
+    "cpptools": {
+      "adapter": "vscode-cpptools",
+      "variables": {
+        "BUILDME": {
+          "shell": "make"
+        }
+      },
+      "configuration": {
+        "request": "launch",
+        "program": "${workspaceRoot}/${fileBasenameNoExtension}.elf",
+        "stopOnEntry": true,
+        "MIMode": "gdb"
+      }
+    }
+  }
+}
